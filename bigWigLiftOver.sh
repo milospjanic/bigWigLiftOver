@@ -3,6 +3,10 @@
 #!/bin/bash
 
 DIR=~/bigWigLiftOver
+FILE=~/bigWigToBedGraph
+FILE2=~/hg18ToHg19.over.chain.gz
+FILE3=~/liftOver
+FILE4=~/bedGraphToBigWig 
 
 BIGWIG=$(pwd)/$1
 echo Proccesing file:
@@ -12,14 +16,51 @@ echo $BIGWIG
 
 if [ ! -d $DIR ]
 then
-mkdir ~/chrStartEnd2rsID
+mkdir ~/bigWigLiftOver
 fi
 
-cd ~/chrStartEnd2rsID
+cd ~/bigWigLiftOver
 
-#check if dbsnp file exists, if not, download from snp147Common table using mysql
+#check if bigWigToBedGraph file exists, if not, download from http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/
 
 if [ ! -f $FILE ]
 then
-mysql --user=genome --host=genome-mysql.cse.ucsc.edu -A -N -D hg19 -e 'SELECT chrom, chromStart, chromEnd, name FROM snp147Common' > snp147Common.bed
+wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/bigWigToBedGraph
 fi
+
+chmod 755 ./bigWigToBedGraph
+
+./bigWigToBedGraph $BIGWIG out.bedGraph
+
+
+#check if hg18ToHg19.over.chain.gz file exists, if not, download from http://hgdownload.cse.ucsc.edu/goldenpath/hg18/liftOver/
+
+if [ ! -f $FILE2 ]
+then
+wget http://hgdownload.cse.ucsc.edu/goldenpath/hg18/liftOver/hg18ToHg19.over.chain.gz
+fi
+
+gunzip hg18ToHg19.over.chain.gz
+
+#check if liftOver file exists, if not, download from http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/
+
+if [ ! -f $FILE3 ]
+then
+wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/liftOver
+fi
+
+chmod 755 ./liftOver
+
+./liftOver out.bedGraph hg18ToHg19.over.chain out.bedGraph.hg19 unMapped
+
+#check if bedGraphToBigWig file exists, if not, download from http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/
+
+if [ ! -f $FILE4 ]
+then
+wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/bedGraphToBigWig
+fi
+
+chmod 755 ./bedGraphToBigWig
+
+./bedGraphToBigWig out.bedGraph.hg19 $BIGWIG.hg19
+
