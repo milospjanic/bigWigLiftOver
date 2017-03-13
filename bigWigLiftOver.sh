@@ -54,6 +54,8 @@ chmod 755 ./liftOver
 
 ./liftOver -bedPlus=4 out.bedGraph hg18ToHg19.over.chain out.bedGraph.hg19 unMapped 
 
+sort -k1,1 -k2,2n out.bedGraph.hg19 > out.bedGraph.hg19.sort
+
 #check if bedGraphToBigWig file exists, if not, download from http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/
 
 if [ ! -f $FILE4 ]
@@ -71,5 +73,6 @@ wget https://genome.ucsc.edu/goldenpath/help/hg19.chrom.sizes
 fi
 
 
-./bedGraphToBigWig out.bedGraph.hg19 hg19.chrom.sizes $BIGWIG.hg19
+./bedGraphToBigWig out.bedGraph.hg19.sort hg19.chrom.sizes $BIGWIG.hg19
 
+rm out.bedGraph.hg19
