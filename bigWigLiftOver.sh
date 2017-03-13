@@ -2,12 +2,11 @@
 
 #!/bin/bash
 
-DIR=bigWigLiftOver
-FILE=bigWigToBedGraph
-FILE2=hg18ToHg19.over.chain.gz
-FILE3=liftOver
-FILE4=bedGraphToBigWig 
-FILE5=hg19.chrom.sizes
+DIR=~/bigWigLiftOver
+FILE=~/bigWigToBedGraph
+FILE2=~/hg18ToHg19.over.chain.gz
+FILE3=~/liftOver
+FILE4=~/bedGraphToBigWig 
 
 BIGWIG=$(pwd)/$1
 echo Proccesing file:
@@ -22,11 +21,11 @@ fi
 
 cd ~/bigWigLiftOver
 
-#check if bigWigToBedGraph file exists, if not, download from http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/
+#check if bigWigToBedGraph file exists, if not, download from http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64.v287/
 
 if [ ! -f $FILE ]
 then
-wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/bigWigToBedGraph
+wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64.v287/bigWigToBedGraph
 fi
 
 chmod 755 ./bigWigToBedGraph
@@ -43,36 +42,25 @@ fi
 
 gunzip hg18ToHg19.over.chain.gz
 
-#check if liftOver file exists, if not, download from http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/
+#check if liftOver file exists, if not, download from http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64.v287/
 
 if [ ! -f $FILE3 ]
 then
-wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/liftOver
+wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64.v287/liftOver
 fi
 
 chmod 755 ./liftOver
 
 ./liftOver -bedPlus=4 out.bedGraph hg18ToHg19.over.chain out.bedGraph.hg19 unMapped 
 
-sort -k1,1 -k2,2n out.bedGraph.hg19 > out.bedGraph.hg19.sort
-
-#check if bedGraphToBigWig file exists, if not, download from http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/
+#check if bedGraphToBigWig file exists, if not, download from http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64.v287/
 
 if [ ! -f $FILE4 ]
 then
-wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/bedGraphToBigWig
+wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64.v287/bedGraphToBigWig
 fi
 
 chmod 755 ./bedGraphToBigWig
 
-#check if hg19.chrom.sizes file exists, if not, download from https://genome.ucsc.edu/goldenpath/help/
+./bedGraphToBigWig out.bedGraph.hg19 $BIGWIG.hg19
 
-if [ ! -f $FILE5 ]
-then
-wget https://genome.ucsc.edu/goldenpath/help/hg19.chrom.sizes
-fi
-
-
-./bedGraphToBigWig out.bedGraph.hg19.sort hg19.chrom.sizes $BIGWIG.hg19
-
-rm out.bedGraph.hg19
