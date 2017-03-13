@@ -7,9 +7,15 @@ Script:
 - lifts over the bed preserving the fourth column using  -bedPlus=4
 - converts the bedgraph back to bigwig using bedGraphToBigWig
 
+Script will save new bigwig file with .hg19 extension
 #Usage
 
 <pre>
 chmod 755 ./bigWigLiftOver
 ./bigWigLiftOver path/to/bigwig/file.bw
 </pre>
+
+#Example
+
+
+
