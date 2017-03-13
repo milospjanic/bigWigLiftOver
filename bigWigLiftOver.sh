@@ -51,7 +51,7 @@ fi
 
 chmod 755 ./liftOver
 
-./liftOver out.bedGraph hg18ToHg19.over.chain out.bedGraph.hg19 unMapped
+./liftOver -bedPlus=4 out.bedGraph hg18ToHg19.over.chain out.bedGraph.hg19 unMapped 
 
 #check if bedGraphToBigWig file exists, if not, download from http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/
 
