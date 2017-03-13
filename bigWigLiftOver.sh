@@ -2,11 +2,12 @@
 
 #!/bin/bash
 
-DIR=~/bigWigLiftOver
-FILE=~/bigWigToBedGraph
-FILE2=~/hg18ToHg19.over.chain.gz
-FILE3=~/liftOver
-FILE4=~/bedGraphToBigWig 
+DIR=bigWigLiftOver
+FILE=bigWigToBedGraph
+FILE2=hg18ToHg19.over.chain.gz
+FILE3=liftOver
+FILE4=bedGraphToBigWig 
+FILE5=hg19.chrom.sizes
 
 BIGWIG=$(pwd)/$1
 echo Proccesing file:
@@ -62,5 +63,13 @@ fi
 
 chmod 755 ./bedGraphToBigWig
 
-./bedGraphToBigWig out.bedGraph.hg19 $BIGWIG.hg19
+#check if hg19.chrom.sizes file exists, if not, download from https://genome.ucsc.edu/goldenpath/help/
+
+if [ ! -f $FILE5 ]
+then
+wget https://genome.ucsc.edu/goldenpath/help/hg19.chrom.sizes
+fi
+
+
+./bedGraphToBigWig out.bedGraph.hg19 hg19.chrom.sizes $BIGWIG.hg19
 
