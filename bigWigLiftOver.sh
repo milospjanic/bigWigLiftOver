@@ -3,7 +3,7 @@
 #!/bin/bash
 
 DIR=bigWigLiftOver
-FILE=bigWigToBedGraph
+FILE1=bigWigToBedGraph
 FILE2=hg18ToHg19.over.chain.gz
 FILE3=liftOver
 FILE4=hg19.chrom.sizes
@@ -22,11 +22,11 @@ fi
 
 cd ~/bigWigLiftOver
 
-#check if bigWigToBedGraph file exists, if not, download from http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64.v287/
+#check if bigWigToBedGraph file exists, if not, download from http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64.v287/bigWigToBedGraph
 
-if [ ! -f $FILE ]
+if [ ! -f $FILE1 ]
 then
-wget http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64.v287/bigWigToBedGraph
+wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64.v287/bigWigToBedGraph
 fi
 
 chmod 755 ./bigWigToBedGraph
@@ -54,7 +54,7 @@ chmod 755 ./liftOver
 
 ./liftOver -bedPlus=4 out.bedGraph hg18ToHg19.over.chain out.bedGraph.hg19 unMapped 
 
-out.bedGraph.hg19 > out.bedGraph.hg19.sort
+sort -k1,1 -k2,2n out.bedGraph.hg19 > out.bedGraph.hg19.sort
 
 #check if hg19.chrom.sizes file exists, if not, download from https://genome.ucsc.edu/goldenpath/help/hg19.chrom.sizes
 
