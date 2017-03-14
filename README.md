@@ -17,8 +17,8 @@ Script will save new bigwig file with .hg19 extension
 #Usage
 
 <pre>
-chmod 755 ./bigWigLiftOver
-./bigWigLiftOver path/to/bigwig/file.bw
+chmod 755 ./bigWigLiftOver.sh
+./bigWigLiftOver.sh path/to/bigwig/file.bw
 </pre>
 
 #Example
