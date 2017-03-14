@@ -1,6 +1,6 @@
-#bigWigLiftOver
-
 #!/bin/bash
+
+###bigWigLiftOver
 
 DIR=bigWigLiftOver
 FILE1=bigWigToBedGraph
