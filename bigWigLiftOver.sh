@@ -15,12 +15,12 @@ echo $BIGWIG
 
 #check if working folder exist, if not, create
 
-if [ ! -d $DIR ]
+if [ ! -d ~/$DIR ]
 then
-mkdir ~/bigWigLiftOver
+mkdir ~/$DIR
 fi
 
-cd ~/bigWigLiftOver
+cd ~/$DIR
 
 #check if bigWigToBedGraph file exists, if not, download from http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64.v287/bigWigToBedGraph
 
