@@ -2,7 +2,7 @@
 
 ###bigWigLiftOver
 
-DIR=bigWigLiftOver
+DIR=bigWigLiftOver  # relative to $HOME
 FILE1=bigWigToBedGraph
 FILE2=hg18ToHg19.over.chain.gz
 FILE3=liftOver
@@ -13,7 +13,7 @@ BIGWIG=$(pwd)/$1
 echo Proccesing file:
 echo $BIGWIG
 
-#check if working folder exist, if not, create
+#check if working folder exist, if not, create (assumes, $DIR is relative to $HOME)
 
 if [ ! -d ~/$DIR ]
 then
@@ -22,11 +22,11 @@ fi
 
 cd ~/$DIR
 
-#check if bigWigToBedGraph file exists, if not, download from http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64.v287/bigWigToBedGraph
+#check if bigWigToBedGraph file exists, if not, download from http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/bigWigToBedGraph
 
 if [ ! -f $FILE1 ]
 then
-wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64.v287/bigWigToBedGraph
+wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/bigWigToBedGraph
 fi
 
 chmod 755 ./bigWigToBedGraph
@@ -43,11 +43,11 @@ fi
 
 gunzip hg18ToHg19.over.chain.gz
 
-#check if liftOver file exists, if not, download from http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64.v287/liftOver
+#check if liftOver file exists, if not, download from http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/liftOver
 
 if [ ! -f $FILE3 ]
 then
-wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64.v287/liftOver
+wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/liftOver
 fi
 
 chmod 755 ./liftOver
@@ -64,11 +64,11 @@ wget https://genome.ucsc.edu/goldenpath/help/hg19.chrom.sizes
 fi
 
 
-#check if bedGraphToBigWig file exists, if not, download from http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64.v287/bedGraphToBigWig
+#check if bedGraphToBigWig file exists, if not, download from http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/bedGraphToBigWig
 
 if [ ! -f $FILE5 ]
 then
-wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64.v287/bedGraphToBigWig
+wget http://hgdownload.soe.ucsc.edu/admin/exe/linux.x86_64/bedGraphToBigWig
 fi
 
 chmod 755 ./bedGraphToBigWig
